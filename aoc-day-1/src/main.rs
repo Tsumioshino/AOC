@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn read_lines(filename: &str) -> (Vec<i32>, Vec<i32>) {
     let mut lista_1: Vec<i32> = Vec::new();
     let mut lista_2: Vec<i32> = Vec::new();
@@ -9,6 +11,21 @@ fn read_lines(filename: &str) -> (Vec<i32>, Vec<i32>) {
     }
 
     return (lista_1, lista_2);
+}
+
+fn similarity_sum(lista_1: Vec<i32>, lista_2: Vec<i32>) -> i32 {
+    let mut map: HashMap<i32, i32> = HashMap::new();
+    for elemento in lista_1 {
+        map.insert(elemento, 0);
+    }
+    for elemento in lista_2 {
+        map.entry(elemento).and_modify( |e| *e += 1 );
+    }
+    let mut sum = 0;
+    for (k, v) in map {
+        sum += k * v
+    } 
+    return sum;
 }
 
 fn main() {
@@ -28,6 +45,7 @@ fn main() {
     for elemento in lista_dif {
         sum += elemento
     }
-    println!("{}", sum)
+    println!("{}", sum);
+    println!("{}", similarity_sum(lista_1, lista_2));
 
 }
